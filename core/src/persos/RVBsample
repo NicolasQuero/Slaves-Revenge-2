@@ -1,0 +1,462 @@
+public class Ball{ //create a ball with its attributes
+        protected String color; //color of the ball
+        protected int HP;
+        protected ProgressBar HP_bar;
+        protected int MP;
+        protected ProgressBar MP_bar;
+        protected boolean alive;
+        protected int[] vars_combat = new int[2]; // [HP(0),MP(1)]
+        protected int lvl_ball; //level of the ball
+        protected int[] lvl_balls = new int[3]; //levels of the 3 balls in an array [R,G,B]
+        protected int[] skills_lvl; //skills' levels in an array [...]
+        protected int[] caracs; //characteristics base levels in an array [Strength,Agility,Defense,...]
+        protected int[] equipment; //equipment of the ball in an array [...]
+        protected int[] pos = new int[2]; //position of the ball (x,y)
+
+        public int get_vars_combat(int i){
+            return vars_combat[i];
+        }
+        public boolean set_vars_combat(int i, int val){ // Index i : 0 = HP, 1 = MP
+            if(i==0) { //HP case
+                if (val>0) { // we check if we have to add or substract HP
+                    if ((vars_combat[i] + val) < HP) { // we check that it doesn't overpass HP
+                        vars_combat[i] += val;
+                        HP_bar.setProgress(vars_combat[i]);
+                        return true;
+                    }
+                    else {
+                        vars_combat[i]=HP;
+                        HP_bar.setProgress(vars_combat[i]);
+                        return true;
+                    }
+                }
+                else if (val<0) {
+                    if ((vars_combat[i] + val) > 0){
+                        vars_combat[i] += val;
+                        HP_bar.setProgress(vars_combat[i]);
+                        return true;
+                    }
+                    else {
+                        vars_combat[i] = 0;
+                        HP_bar.setProgress(vars_combat[i]);
+                        return false; //ball is dead
+                    }
+                }
+            }
+            if (i==1) { //MP case
+                if(val>0) { //add MP
+                    if (vars_combat[i] + val < MP) {
+                        vars_combat[i] += val;
+                        MP_bar.setProgress(vars_combat[i]);
+                        return true;
+                    } else {
+                        vars_combat[i] = MP;
+                        MP_bar.setProgress(vars_combat[i]);
+                        return true;
+                    }
+                }
+                if(val<0) { //susbtract MP
+                    if ((vars_combat[i] + val)>=0){
+                        vars_combat[i]+=val;
+                        MP_bar.setProgress(vars_combat[i]);
+                        return true;
+                    }
+                    else{
+                        return false; //not enough mana
+                    }
+                }
+            }
+        return false;
+        }
+    }
+
+    public class RedBall extends MainActivity.Ball {
+        RedBall() {
+            color = "Red";
+            HP = 100;
+            HP_bar = findViewById(R.id.redProgBarHP);
+            MP = 100;
+            MP_bar = findViewById(R.id.redProgBarMP);
+            alive = true;
+            vars_combat[0]=HP; vars_combat[1]=MP;
+            lvl_ball = lvl_balls[0];
+            skills_lvl = new int[5];
+            caracs = new int[5]; caracs[0]=10; caracs[1]=25; // [0=atk, 1=spell_dmg]
+
+            ball_img = findViewById(R.id.redball_img); // or redball_img.getLocationOnScreen(pos);
+        }
+
+    }
+
+    public class GreenBall extends MainActivity.Ball {
+        GreenBall() {
+            color = "Green";
+            HP = 100;
+            HP_bar = findViewById(R.id.greenProgBarHP);
+            MP = 100;
+            MP_bar = findViewById(R.id.greenProgBarMP);
+            alive = true;
+            vars_combat[0]=HP; vars_combat[1]=MP;
+            lvl_ball = lvl_balls[1];
+            skills_lvl = new int[5];
+            caracs = new int[5]; caracs[0]=10; caracs[1]=30; // [0=atk, 1=spell_dmg]
+            ball_img = findViewById(R.id.greenball_img);
+        }
+    }
+
+    public class BlueBall extends MainActivity.Ball {
+        BlueBall() {
+            color = "Blue";
+            HP = 100;
+            HP_bar = findViewById(R.id.blueProgBarHP);
+            MP = 100;
+            MP_bar = findViewById(R.id.blueProgBarMP);
+            alive = true;
+            vars_combat[0]=HP; vars_combat[1]=MP;
+            lvl_ball = lvl_balls[2];
+            skills_lvl = new int[5];
+            caracs = new int[5]; caracs[0]=10; caracs[1]=20; // [0=atk, 1=spell_dmg]
+            ball_img = findViewById(R.id.blueball_img);
+
+        }
+    }
+
+    public class Boss {
+        protected int HP;
+        protected boolean alive;
+        protected int[] boss_dmg = new int[3];
+        protected ImageView ball_img;
+        protected ProgressBar HP_bar;
+        Boss() {
+            boss_dmg[0]=10;boss_dmg[1]=20;boss_dmg[2]=35;
+            HP = 300;
+            alive = true;
+            ball_img = findViewById(R.id.bossBlackCreep);
+            HP_bar = findViewById(R.id.bossBC_HP);
+        }
+        //@SuppressLint("SetTextI18n")
+        public boolean set_HP(int val) {
+            if (val>0) { // we check if we have to add or substract HP
+                if ((HP + val) < 300) { // we check that it doesn't overpass HP
+                    HP += val;
+                    HP_bar.setProgress(HP);
+
+                    /*TextView dmg_txtv = new TextView(MainActivity.this);
+                    dmg_txtv.setText("-"+val);
+                    dmg_txtv.setId(0);
+                    constraint_layout.addView(dmg_txtv);
+                    c_set.clone(constraint_layout);
+                    c_set.connect(dmg_txtv.getId(), ConstraintSet.TOP, constraint_layout.getId(), ConstraintSet.TOP, 60);
+                    c_set.applyTo(constraint_layout);*/
+
+
+                    return true;
+                }
+                else {
+                    HP=300;
+                    HP_bar.setProgress(HP);
+                    return true;
+                }
+            }
+            if (val<0) {
+                if ((HP + val) > 0){
+                    HP += val;
+                    HP_bar.setProgress(HP);
+                    return true;
+                }
+                else {
+                    HP = 0;
+                    HP_bar.setProgress(HP);
+                    return false; //ball is dead
+                }
+            }
+        return false;
+        }
+        public int get_hp(){
+            return HP;
+        }
+    }
+
+    public class Ennemy {
+        Ennemy() {
+            int ennemy_dmg = 5;
+            int HP = 100;
+            ImageView ball_img = ennemyPurp1;
+            ProgressBar ennemy_HP = ennemyPurp1HP;
+        }
+    }
+
+    public class Item{
+
+    }
+
+    public class Equipment extends Item {
+
+    }
+
+    @Override
+    public void onBackPressed(){
+
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+         // BLUE BALL IMG
+        this.blueProgBarHP = (ProgressBar) findViewById(R.id.blueProgBarHP);
+        this.blueProgBarMP = (ProgressBar) findViewById(R.id.blueProgBarMP);
+        this.baseatk_blue_icon = (ImageView) findViewById(R.id.baseatk_blue_icon);
+        this.anim_blue_icon = (ImageView) findViewById(R.id.anim_blue_icon);
+        final BlueBall BB = new BlueBall();
+
+        // RED BALL IMG
+        this.redProgBarHP = (ProgressBar) findViewById(R.id.redProgBarHP);
+        this.redProgBarMP = (ProgressBar) findViewById(R.id.redProgBarMP);
+        this.baseatk_red_icon = (ImageView) findViewById(R.id.baseatk_red_icon);
+        this.anim_red_icon = (ImageView) findViewById(R.id.anim_red_icon);
+        final RedBall RB = new RedBall();
+
+         // GREEN BALL IMG
+        this.greenProgBarHP = (ProgressBar) findViewById(R.id.greenProgBarHP);
+        this.greenProgBarMP = (ProgressBar) findViewById(R.id.greenProgBarMP);
+        this.baseatk_green_icon = (ImageView) findViewById(R.id.baseatk_green_icon);
+        this.anim_green_icon = (ImageView) findViewById(R.id.anim_green_icon);
+        final GreenBall GB = new GreenBall();
+
+        this.rageProgBar = findViewById(R.id.rageProgBar);
+
+        final Boss bossBC = new Boss();
+
+        this.ennemyPurp1 = (ImageView) findViewById(R.id.ennemyPurp1);
+        this.ennemyPurp1HP = (ProgressBar) findViewById(R.id.ennemyPurp1HP);
+
+        this.constraint_layout = (ConstraintLayout) findViewById(R.id.constraint_layout_cbt);
+        this.c_set = new ConstraintSet();
+
+         // $$$ Création des fichiers de base $$$ //
+        File equipmentFile = new File(Environment.getExternalStorageDirectory() + File.separator + "docs","equipmentFile.txt"); //Fichier pour équipements
+        File docsDir = new File(Environment.getExternalStorageDirectory() + File.separator + "docs"); //Répertoire où enregistrer les documents nécessaires
+        Boolean success = true;
+        if(!docsDir.exists()){ //Création du répertoire si il n'existe pas déjà
+            success = docsDir.mkdir();
+        }
+        if(success && !equipmentFile.exists()){  // On crée les fichiers de base si ils n'ont pas déjà été créés.
+            String equipBaseText = "équipement \n skills \n niveaux";
+            try {
+                FileOutputStream output = new FileOutputStream(equipmentFile);
+                output.write(equipBaseText.getBytes());
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else {System.out.println("Erreur de création de dossier/fichier");}
+        // $$$ Fin de création des fichiers de base $$$ //
+
+        //UTILISER redball_img.setOnDragListener();
+
+        class Baseatk_red implements Runnable{ //We cast a spell from RB to the boss_BC
+            public void run() {
+                try {
+                    //ImageView baseatk_red1 = new ImageView(MainActivity.this);
+                    //baseatk_red1.setImageResource(R.drawable.baseatk_red1);
+                    //baseatk_red1.setX(RB.ball_img.getX());
+                    //baseatk_red1.setY(RB.ball_img.getY());
+
+                  //  @SuppressLint("ResourceType") RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.layout.activity_main);
+                   // RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+
+                    float x = bossBC.ball_img.getX();
+                    float y = bossBC.ball_img.getY();
+                    for (int i = 0; i < 1; i++) {
+                        //baseatk_red1.setX(RB.ball_img.getX() + (x / 10));
+                        //baseatk_red1.setY(RB.ball_img.getY() + (y / 10));
+                        Thread.sleep(100);
+                    }
+                    bossBC.set_HP(-RB.caracs[0]); //Red Ball is hitting the boss by its atk (= caracs[0])
+                    rageProgBar.setProgress(rageProgBar.getProgress()+2); // We add 2 rage points for each base atk
+                }
+                catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        class Baseatk_green implements Runnable{ //We cast a spell from RB to the boss_BC
+            public void run() {
+                bossBC.set_HP(-GB.caracs[0]); //Green Ball is hitting the boss by its atk (= caracs[0])
+                rageProgBar.setProgress(rageProgBar.getProgress()+2); // We add 2 rage points for each base atk
+            }
+        }
+        class Baseatk_blue implements Runnable{ //We cast a spell from RB to the boss_BC
+            public void run() {
+                bossBC.set_HP(-BB.caracs[0]); //Blue Ball is hitting the boss by its atk (= caracs[0])
+                rageProgBar.setProgress(rageProgBar.getProgress()+2); // We add 2 rage points for each base atk
+            }
+        }
+
+        class Sort_R_1 implements Runnable {
+            @Override
+            public void run() {
+                bossBC.set_HP(-RB.caracs[1]);
+                for (int i=0; i<10; i++) {
+                    bossBC.set_HP(-1);
+                    System.out.println(bossBC.get_hp());
+                    try {
+                        Thread.sleep(300);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                        System.out.println("Souci sort R_1");
+                    }
+                }
+            }
+        }
+
+        class Sort_B_1 implements Runnable {
+            @Override
+            public void run() {
+                try {
+                    for (int i = 0; i < 20; i++) {
+                        RB.set_vars_combat(0,BB.caracs[1]/10);
+                        BB.set_vars_combat(0,BB.caracs[1]/10);
+                        GB.set_vars_combat(0,BB.caracs[1]/10);
+                        Thread.sleep(100);
+                    }
+                }
+                catch(InterruptedException e){
+                    e.printStackTrace();
+
+                }
+
+            }
+        }
+
+        class Sort_G_1 implements Runnable {
+            @Override
+            public void run() {
+                bossBC.set_HP(-GB.caracs[1]);
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        class Ulti_1 implements Runnable {
+            @Override
+            public void run() {
+                for (int i=0; i<3; i++) {
+                    Thread thread_sortR = new Thread(new Sort_R_1());
+                    thread_sortR.start();
+                    Thread thread_sortG = new Thread(new Sort_G_1());
+                    thread_sortG.start();
+                    Thread thread_sortB = new Thread(new Sort_B_1());
+                    thread_sortB.start();
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
+        class Hokuto implements Runnable{ // Régén mana, dégâts d'ennemis, etc. cadencés
+            private boolean doStop = false;
+            public synchronized void doStop() {
+                this.doStop = true;
+            }
+            private synchronized boolean keepRunning() {
+                return !this.doStop;
+            }
+            public void run() {
+                while (keepRunning()) {
+                    BB.set_vars_combat(1,1);
+                    RB.set_vars_combat(1,1);
+                    GB.set_vars_combat(1,1);
+                    bossBC.set_HP(1);
+                    BB.set_vars_combat(0,-1);
+                    RB.set_vars_combat(0,-1);
+                    GB.set_vars_combat(0,-1);
+
+                    try {
+                        Thread.sleep(300);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
+        Thread thread_hokuto = new Thread(new Hokuto());
+        thread_hokuto.start();
+
+        baseatk_red_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { //if we click on baseatk_red, we cast a spell
+                if(RB.set_vars_combat(1,-10)) {
+                    Thread thread_baR = new Thread(new Baseatk_red());
+                    thread_baR.start();
+                }
+            }
+        });
+        anim_red_icon.setOnClickListener(new View.OnClickListener() { //SPELL RED
+            @Override
+            public void onClick(View view) {
+                if(RB.set_vars_combat(1,-25)) {
+                    Thread thread_sortR = new Thread(new Sort_R_1());
+                    thread_sortR.start();
+                }
+            }
+        });
+        baseatk_green_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { //if we click on baseatk_green, we cast a spell
+                if(GB.set_vars_combat(1,-10)) {
+                    Thread thread_baG = new Thread(new Baseatk_green());
+                    thread_baG.start();
+                }
+            }
+        });
+        anim_green_icon.setOnClickListener(new View.OnClickListener() { //SPELL RED
+            @Override
+            public void onClick(View view) {
+                if(GB.set_vars_combat(1,-30)) {
+                    Thread thread_sortG = new Thread(new Sort_G_1());
+                    thread_sortG.start();
+                }
+            }
+        });
+        baseatk_blue_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { //if we click on baseatk_blue, we cast a spell
+                if(BB.set_vars_combat(1,-10)) {
+                    Thread thread_baB = new Thread(new Baseatk_blue());
+                    thread_baB.start();
+                }
+            }
+        });
+        anim_blue_icon.setOnClickListener(new View.OnClickListener() { //SPELL RED
+            @Override
+            public void onClick(View view) {
+                if(BB.set_vars_combat(1,-30)) {
+                    Thread thread_sortB = new Thread(new Sort_B_1());
+                    thread_sortB.start();
+                }
+            }
+        });
+        rageProgBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (rageProgBar.getProgress()>=100) {
+                    Thread thread_ulti = new Thread(new Ulti_1());
+                    thread_ulti.start();
+                }
+            }
+        });
+    }

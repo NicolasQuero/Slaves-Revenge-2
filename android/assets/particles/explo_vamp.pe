@@ -1,0 +1,631 @@
+charge
+- Delay -
+active: false
+- Duration - 
+lowMin: 1000.0
+lowMax: 1000.0
+- Count - 
+min: 0
+max: 25
+- Emission - 
+lowMin: 0.0
+lowMax: 0.0
+highMin: 20.0
+highMax: 20.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
+- Life - 
+lowMin: 0.0
+lowMax: 0.0
+highMin: 500.0
+highMax: 500.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
+- Life Offset - 
+active: false
+- X Offset - 
+active: false
+- Y Offset - 
+active: false
+- Spawn Shape - 
+shape: point
+- Spawn Width - 
+lowMin: 0.0
+lowMax: 0.0
+highMin: 0.0
+highMax: 0.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
+- Spawn Height - 
+lowMin: 0.0
+lowMax: 0.0
+highMin: 0.0
+highMax: 0.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
+- Scale - 
+lowMin: 0.0
+lowMax: 0.0
+highMin: 16.0
+highMax: 24.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
+- Velocity - 
+active: true
+lowMin: 0.0
+lowMax: 0.0
+highMin: 0.0
+highMax: 100.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
+- Angle - 
+active: true
+lowMin: 0.0
+lowMax: 0.0
+highMin: 1.0
+highMax: 360.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
+- Rotation - 
+active: false
+- Wind - 
+active: false
+- Gravity - 
+active: false
+- Tint - 
+colorsCount: 18
+colors0: 1.0
+colors1: 0.047058824
+colors2: 0.047058824
+colors3: 1.0
+colors4: 0.89411765
+colors5: 0.047058824
+colors6: 0.16470589
+colors7: 1.0
+colors8: 0.047058824
+colors9: 0.047058824
+colors10: 0.9843137
+colors11: 1.0
+colors12: 0.047058824
+colors13: 0.07450981
+colors14: 1.0
+colors15: 1.0
+colors16: 0.047058824
+colors17: 0.79607844
+timelineCount: 6
+timeline0: 0.0
+timeline1: 0.27979276
+timeline2: 0.48013818
+timeline3: 0.69430053
+timeline4: 0.8618308
+timeline5: 1.0
+- Transparency - 
+lowMin: 0.0
+lowMax: 0.0
+highMin: 1.0
+highMax: 1.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
+- Options - 
+attached: false
+continuous: false
+aligned: false
+additive: true
+behind: false
+premultipliedAlpha: false
+- Image Path -
+/C:/Users/nicoq/Documents/particle.png
+
+
+red
+- Delay -
+active: true
+lowMin: 1100.0
+lowMax: 1100.0
+- Duration - 
+lowMin: 1000.0
+lowMax: 1000.0
+- Count - 
+min: 20
+max: 150
+- Emission - 
+lowMin: 0.0
+lowMax: 0.0
+highMin: 150.0
+highMax: 150.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
+- Life - 
+lowMin: 0.0
+lowMax: 0.0
+highMin: 500.0
+highMax: 500.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
+- Life Offset - 
+active: false
+- X Offset - 
+active: false
+- Y Offset - 
+active: false
+- Spawn Shape - 
+shape: point
+- Spawn Width - 
+lowMin: 0.0
+lowMax: 0.0
+highMin: 0.0
+highMax: 0.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
+- Spawn Height - 
+lowMin: 0.0
+lowMax: 0.0
+highMin: 0.0
+highMax: 0.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
+- Scale - 
+lowMin: 0.0
+lowMax: 0.0
+highMin: 32.0
+highMax: 32.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
+- Velocity - 
+active: true
+lowMin: 0.0
+lowMax: 0.0
+highMin: 200.0
+highMax: 300.0
+relative: false
+scalingCount: 3
+scaling0: 1.0
+scaling1: 1.0
+scaling2: 0.19607843
+timelineCount: 3
+timeline0: 0.0
+timeline1: 0.23972602
+timeline2: 0.30821916
+- Angle - 
+active: true
+lowMin: 0.0
+lowMax: 0.0
+highMin: 1.0
+highMax: 360.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
+- Rotation - 
+active: true
+lowMin: 0.0
+lowMax: 0.0
+highMin: 0.0
+highMax: 0.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
+- Wind - 
+active: false
+- Gravity - 
+active: false
+- Tint - 
+colorsCount: 12
+colors0: 0.9764706
+colors1: 0.047058824
+colors2: 0.047058824
+colors3: 0.44705883
+colors4: 0.35686275
+colors5: 0.019607844
+colors6: 0.7019608
+colors7: 0.03137255
+colors8: 0.03137255
+colors9: 0.34509805
+colors10: 0.12941177
+colors11: 0.12941177
+timelineCount: 4
+timeline0: 0.0
+timeline1: 0.3955095
+timeline2: 0.6701209
+timeline3: 1.0
+- Transparency - 
+lowMin: 0.0
+lowMax: 0.0
+highMin: 1.0
+highMax: 1.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
+- Options - 
+attached: false
+continuous: false
+aligned: false
+additive: true
+behind: false
+premultipliedAlpha: false
+- Image Path -
+/C:/Users/nicoq/Documents/pre_particle.png
+
+
+heal
+- Delay -
+active: true
+lowMin: 2200.0
+lowMax: 2200.0
+- Duration - 
+lowMin: 500.0
+lowMax: 500.0
+- Count - 
+min: 0
+max: 25
+- Emission - 
+lowMin: 0.0
+lowMax: 0.0
+highMin: 50.0
+highMax: 50.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
+- Life - 
+lowMin: 0.0
+lowMax: 0.0
+highMin: 500.0
+highMax: 500.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
+- Life Offset - 
+active: false
+- X Offset - 
+active: true
+lowMin: -10.0
+lowMax: 10.0
+highMin: 0.0
+highMax: 0.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
+- Y Offset - 
+active: true
+lowMin: -10.0
+lowMax: 10.0
+highMin: 0.0
+highMax: 0.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
+- Spawn Shape - 
+shape: line
+- Spawn Width - 
+lowMin: 0.0
+lowMax: 0.0
+highMin: 0.0
+highMax: 0.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
+- Spawn Height - 
+lowMin: 0.0
+lowMax: 0.0
+highMin: 0.0
+highMax: 0.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
+- Scale - 
+lowMin: 0.0
+lowMax: 0.0
+highMin: 32.0
+highMax: 32.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
+- Velocity - 
+active: true
+lowMin: 0.0
+lowMax: 0.0
+highMin: 100.0
+highMax: 150.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
+- Angle - 
+active: true
+lowMin: 0.0
+lowMax: 0.0
+highMin: 1.0
+highMax: 360.0
+relative: true
+scalingCount: 4
+scaling0: 0.29411766
+scaling1: 0.27450982
+scaling2: 0.4117647
+scaling3: 1.0
+timelineCount: 4
+timeline0: 0.0
+timeline1: 0.46575344
+timeline2: 0.8082192
+timeline3: 1.0
+- Rotation - 
+active: false
+- Wind - 
+active: false
+- Gravity - 
+active: true
+lowMin: 0.0
+lowMax: 0.0
+highMin: 0.0
+highMax: 0.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
+- Tint - 
+colorsCount: 12
+colors0: 0.03529412
+colors1: 0.72156864
+colors2: 0.45490196
+colors3: 0.03529412
+colors4: 0.74509805
+colors5: 0.21176471
+colors6: 0.02745098
+colors7: 0.5803922
+colors8: 0.12156863
+colors9: 0.27058825
+colors10: 1.0
+colors11: 0.047058824
+timelineCount: 4
+timeline0: 0.0
+timeline1: 0.20552677
+timeline2: 0.48877373
+timeline3: 1.0
+- Transparency - 
+lowMin: 0.0
+lowMax: 0.0
+highMin: 1.0
+highMax: 1.0
+relative: false
+scalingCount: 4
+scaling0: 1.0
+scaling1: 1.0
+scaling2: 1.0
+scaling3: 1.0
+timelineCount: 4
+timeline0: 0.0
+timeline1: 0.53424656
+timeline2: 0.96575344
+timeline3: 1.0
+- Options - 
+attached: false
+continuous: false
+aligned: false
+additive: true
+behind: false
+premultipliedAlpha: false
+- Image Path -
+/C:/Users/nicoq/Documents/pre_particle.png
+
+
+heal
+- Delay -
+active: true
+lowMin: 2700.0
+lowMax: 2700.0
+- Duration - 
+lowMin: 500.0
+lowMax: 500.0
+- Count - 
+min: 0
+max: 25
+- Emission - 
+lowMin: 0.0
+lowMax: 0.0
+highMin: 50.0
+highMax: 50.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
+- Life - 
+lowMin: 0.0
+lowMax: 0.0
+highMin: 500.0
+highMax: 500.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
+- Life Offset - 
+active: false
+- X Offset - 
+active: true
+lowMin: -10.0
+lowMax: 10.0
+highMin: 0.0
+highMax: 0.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
+- Y Offset - 
+active: true
+lowMin: -10.0
+lowMax: 10.0
+highMin: 0.0
+highMax: 0.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
+- Spawn Shape - 
+shape: line
+- Spawn Width - 
+lowMin: 0.0
+lowMax: 0.0
+highMin: 0.0
+highMax: 0.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
+- Spawn Height - 
+lowMin: 0.0
+lowMax: 0.0
+highMin: 0.0
+highMax: 0.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
+- Scale - 
+lowMin: 0.0
+lowMax: 0.0
+highMin: 32.0
+highMax: 32.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
+- Velocity - 
+active: true
+lowMin: 0.0
+lowMax: 0.0
+highMin: 100.0
+highMax: 150.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
+- Angle - 
+active: true
+lowMin: 0.0
+lowMax: 0.0
+highMin: 1.0
+highMax: 360.0
+relative: true
+scalingCount: 4
+scaling0: 0.29411766
+scaling1: 0.27450982
+scaling2: 0.4117647
+scaling3: 1.0
+timelineCount: 4
+timeline0: 0.0
+timeline1: 0.46575344
+timeline2: 0.8082192
+timeline3: 1.0
+- Rotation - 
+active: false
+- Wind - 
+active: false
+- Gravity - 
+active: true
+lowMin: 0.0
+lowMax: 0.0
+highMin: 0.0
+highMax: 0.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
+- Tint - 
+colorsCount: 3
+colors0: 0.23921569
+colors1: 0.8980392
+colors2: 0.043137256
+timelineCount: 1
+timeline0: 0.0
+- Transparency - 
+lowMin: 0.0
+lowMax: 0.0
+highMin: 1.0
+highMax: 1.0
+relative: false
+scalingCount: 4
+scaling0: 1.0
+scaling1: 1.0
+scaling2: 1.0
+scaling3: 1.0
+timelineCount: 4
+timeline0: 0.0
+timeline1: 0.53424656
+timeline2: 0.96575344
+timeline3: 1.0
+- Options - 
+attached: false
+continuous: false
+aligned: false
+additive: true
+behind: false
+premultipliedAlpha: false
+- Image Path -
+/C:/Users/nicoq/Documents/pre_particle.png

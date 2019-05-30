@@ -1,0 +1,5 @@
+{
+  com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
+    default: { up: "button_plus.png", imageChecked: "button_plus_checked.png" }
+  }
+}

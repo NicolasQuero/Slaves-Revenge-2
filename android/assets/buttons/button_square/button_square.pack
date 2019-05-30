@@ -1,0 +1,21 @@
+
+button_square.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+button_square_down
+  rotate: false
+  xy: 1, 0
+  size: 16, 16
+  split: 3, 3, 3, 3
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+button_square_up
+  rotate: false
+  xy: 19, 0
+  size: 16, 16
+  split: 3, 3, 3, 3
+  orig: 16, 16
+  offset: 0, 0
+  index: -1

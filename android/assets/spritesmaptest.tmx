@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="12" height="9" tilewidth="60" tileheight="60" infinite="0" nextlayerid="6" nextobjectid="1">
+ <tileset firstgid="1" source="spritestest.tsx"/>
+ <layer id="4" name="Tile Layer 1" width="12" height="9">
+  <data encoding="csv">
+12,12,12,11,12,12,11,11,12,12,12,11,
+11,4,12,12,12,4,4,11,12,12,12,12,
+4,4,2,2,4,4,12,4,4,12,12,3,
+11,11,2,12,4,12,12,11,2,11,3,3,
+12,2,2,12,12,12,11,2,2,2,3,3,
+2,2,12,4,12,12,2,2,2,3,3,3,
+2,11,12,12,12,4,2,2,4,3,3,3,
+2,2,12,12,4,11,2,2,4,3,3,3,
+2,2,2,11,4,2,2,4,4,3,3,3
+</data>
+ </layer>
+ <layer id="5" name="Tile Layer 2" width="12" height="9">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,5,
+0,0,0,0,0,0,0,0,0,0,5,5,
+0,0,0,0,0,0,0,0,0,0,5,5,
+0,0,0,0,0,0,0,0,0,5,5,5,
+0,0,0,0,0,0,0,0,0,5,5,5,
+0,0,0,0,0,0,0,0,0,5,5,5,
+0,0,0,0,0,0,0,0,0,5,5,5
+</data>
+ </layer>
+</map>
