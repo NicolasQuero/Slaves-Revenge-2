@@ -60,25 +60,25 @@ public class ChooseCharac implements InputProcessor {
 		xDraw = 0f; yDraw = 0f;
 	}
 	
-	public void render (OrthographicCamera camera, SpriteBatch batch, float delta, Entity[] entities_played) {
+	public void render (OrthographicCamera camera, SpriteBatch batch, float delta, Entity[] played_entities) {
 		this.camera = camera;
 		xDraw = camera.position.x - camera.viewportWidth/2; yDraw = camera.position.y - camera.viewportHeight/2;
 		
 		batch.draw(choose_charac_img, xDraw + 140, yDraw + 150);
 		for (int i = 0; i < 3; i++) { // draws icons of the selected entities (3 max)
 			if (selected_entity[1] != null && entity_squad_hitboxes[i].contains(touchUpcoords.x, touchUpcoords.y)) {
-				if (!contains(entities_played, selected_entity[1])) {
-					if (entities_played[i] != null)
-						entities_played[i].setPlayed(false); // if there is an entity to change, set it to unplayed
-					entities_played[i] = selected_entity[1];
-					entities_played[i].setPlayed(true);
+				if (!contains(played_entities, selected_entity[1])) {
+					if (played_entities[i] != null)
+						played_entities[i].setPlayed(false); // if there is an entity to change, set it to unplayed
+					played_entities[i] = selected_entity[1];
+					played_entities[i].setPlayed(true);
 				}
 				selected_entity[1] = null;
 			}
 		}
 		int index_played = 0;
 		int index = 0;
-		for (Entity entity : entities_played) { // draws icons of the selected entities (3 max)
+		for (Entity entity : played_entities) { // draws icons of the selected entities (3 max)
 			if (entity != null) {
 				batch.draw(entity.getIcon(), xDraw + 240 + index_played, yDraw + 350, 128, 128);
 				index_played += 236;

@@ -14,6 +14,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import utilities.GameAssetManager;
 
 import PopUps.LvlUpPopUp;
 import Spells.Spell;
@@ -125,6 +126,7 @@ public abstract class Entity {
 		this.dist_closest_ent = 10000f;
 		this.dashTimer = 0f;
 		this.isDashing = false;
+		
 		
 		ent_anim_count = 0;
 		stateTime = 0;
@@ -778,7 +780,47 @@ public abstract class Entity {
 			float angle = calcAng(this.combat_pos, target[0].getCombatPos());
 			this.moveCombatX((float) (Math.cos(angle)*100*delta));
 			this.moveCombatY((float) (Math.sin(angle)*100*delta));
+			if (Math.abs((float) (Math.cos(angle)*100*delta)) > Math.abs((float) (Math.sin(angle)*100*delta))) {
+				if (Math.cos(angle)*100*delta > 0) {
+					if (moves != 'r')
+						courseTimer = 0f;
+					else
+						courseTimer += delta;
+					moves = 'r';
+					ent_anim_count = 3; 
+				}
+				else {
+					if (moves != 'l')
+						courseTimer = 0f;
+					else
+						courseTimer += delta;
+					moves = 'l';
+					ent_anim_count = 2;
+				}
+				
+			}
+			else {
+				if (Math.sin(angle)*100*delta > 0) {
+					if (moves != 'u')
+						courseTimer = 0f;
+					else
+						courseTimer += delta;
+					moves = 'u';
+					ent_anim_count = 4;
+				}
+				else {
+					if (moves != 'd')
+						courseTimer = 0f;
+					else
+						courseTimer += delta;
+					moves = 'd';
+					ent_anim_count = 1;
+				}
+			}
+				
 		}
+		else
+			ent_anim_count = 0;
 		if (this.isCasting()) {
 			this.spells[0].castOnPlayer(batch, camera, delta, ennemies, this, target[0], played_entities, new Vector3(target[0].getCombatCenter(),0));
 		}

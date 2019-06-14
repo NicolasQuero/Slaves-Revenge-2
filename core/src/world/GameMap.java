@@ -6,6 +6,7 @@ import java.util.Comparator;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -27,9 +28,11 @@ import entities.MalikLePretentieux;
 import entities.Player;
 import entities.monsters.MonstreVert1;
 import menus.ChooseCharac;
+import menus.Inventory;
 import menus.Toolbar;
 import menus.UpgradeEnts;
 import saves.SaveData;
+import utilities.GameAssetManager;
 
 public abstract class GameMap {
 	
@@ -54,10 +57,12 @@ public abstract class GameMap {
 	
 	float time, regen_time;
 	int ips;
-	public static boolean upgrade_ents_open;
+	public static boolean upgrade_ents_open, inventory_open;
 	private UpgradeEnts upgradeEnts;
+	private Inventory inventory;
 	
 	private Stage stage;
+	public GameAssetManager assMan;
 	
 	public GameMap () {
 		time = 0f; regen_time = 0f;
@@ -93,6 +98,11 @@ public abstract class GameMap {
 		this.stage = new Stage();
 		Gdx.input.setInputProcessor(stage);
 		Entity.setStage(stage);
+		inventory = new Inventory(stage);
+		
+		//assMan = new GameAssetManager();
+		//assMan.queueAddImages();
+		//assMan.manager.finishLoading();
 	}
 	
 	
@@ -144,9 +154,9 @@ public abstract class GameMap {
 					entity.render(batch, delta);
 				}
 				else {
-					if (entity == played_entities[1])
+					if (entity == played_entities[1] && entity.isAlive())
 						entity.follow(batch, delta, played_entities[0]);
-					else if(entity == played_entities[2])
+					if (entity == played_entities[2] && entity.isAlive())
 						entity.follow(batch, delta, played_entities[1]);
 				}
 			}
@@ -173,16 +183,24 @@ public abstract class GameMap {
 			}
 			
 			if (Gdx.input.isKeyJustPressed(Keys.P)) // opens choose characters interface when you press I
-				choose_charac_open = true;
-			if (Gdx.input.isKeyJustPressed(Keys.I) && !upgrade_ents_open) {
+				choose_charac_open = false;
+			if (Gdx.input.isKeyJustPressed(Keys.O) && !upgrade_ents_open) {
 				upgrade_ents_open = true;
 				upgradeEnts = new UpgradeEnts(entities, played_entities);
+			}
+			if (Gdx.input.isKeyJustPressed(Keys.I)) {
+				inventory_open = true;
+				inventory.open(stage);
 			}
 			if (Gdx.input.isKeyJustPressed(Keys.ESCAPE) && choose_charac_open)
 				choose_charac_open = false;
 			if (Gdx.input.isKeyJustPressed(Keys.ESCAPE) && upgrade_ents_open) {
 				upgrade_ents_open = false;
 				upgradeEnts.dispose();
+			}
+			if (Gdx.input.isKeyJustPressed(Keys.ESCAPE) && inventory_open) {
+				inventory_open = false;
+				inventory.close();
 			}
 			
 			if (Gdx.input.isKeyJustPressed(Keys.F10)) { // SAVE

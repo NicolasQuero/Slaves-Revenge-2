@@ -292,9 +292,6 @@ public class UpgradeEnts {
                 return true;
 		}});
 		
-		float screenCoeffX = Gdx.graphics.getWidth()/1280;
-		float screenCoeffY = Gdx.graphics.getHeight()/800;
-		
 		table.background(upgrade_bg); // the main table is table, the left part of the upgrade is tableG, right part with spells is tableD
 		table.setFillParent(false);
 		table.setPosition((Gdx.graphics.getWidth() - (Gdx.graphics.getWidth() * 800 / 1280)) / 2, (Gdx.graphics.getHeight() - Gdx.graphics.getHeight()*600f/800f)/1.5f);
