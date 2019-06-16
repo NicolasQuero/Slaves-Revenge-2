@@ -27,6 +27,9 @@ import entities.HitlerPoivrot;
 import entities.MalikLePretentieux;
 import entities.Player;
 import entities.monsters.MonstreVert1;
+import items.Clopes;
+import items.Grec;
+import items.SchlassCoursier;
 import menus.ChooseCharac;
 import menus.Inventory;
 import menus.Toolbar;
@@ -99,6 +102,7 @@ public abstract class GameMap {
 		Gdx.input.setInputProcessor(stage);
 		Entity.setStage(stage);
 		inventory = new Inventory(stage);
+		addFirstItems(inventory);
 		
 		//assMan = new GameAssetManager();
 		//assMan.queueAddImages();
@@ -184,11 +188,11 @@ public abstract class GameMap {
 			
 			if (Gdx.input.isKeyJustPressed(Keys.P)) // opens choose characters interface when you press I
 				choose_charac_open = false;
-			if (Gdx.input.isKeyJustPressed(Keys.O) && !upgrade_ents_open) {
+			if (Gdx.input.isKeyJustPressed(Keys.O) && !upgrade_ents_open && !inventory_open) {
 				upgrade_ents_open = true;
 				upgradeEnts = new UpgradeEnts(entities, played_entities);
 			}
-			if (Gdx.input.isKeyJustPressed(Keys.I)) {
+			if (Gdx.input.isKeyJustPressed(Keys.I) && !upgrade_ents_open && !inventory_open) {
 				inventory_open = true;
 				inventory.open(stage);
 			}
@@ -388,6 +392,14 @@ public abstract class GameMap {
 			}
 			regen_time = 0f;
 		}
+	}
+	
+	public void addFirstItems(Inventory inventory) {
+		inventory.addItem(new Clopes());
+		for (int i = 0; i < 15; i++) {
+			inventory.addItem(new Grec());
+		}
+		inventory.addItem(new SchlassCoursier());
 	}
 	
 }

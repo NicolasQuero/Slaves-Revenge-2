@@ -9,5 +9,11 @@ public class Clopes extends Item {
 		super(ItemType.CLOPES, srcIcon);
 		this.nbClopes = 0;
 	}
+	
+	public void addClopes(int nb) {
+		nbClopes += nb;
+		if (nbClopes < 0)
+			nbClopes = 0;
+	}
 
 }

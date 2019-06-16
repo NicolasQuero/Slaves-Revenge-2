@@ -2,24 +2,29 @@ package items;
 
 public enum ItemType {
 	
-	GREC("Grec", 5, true, true, 1, 0), // (id, sellPrice, useInstant, consumable, rarity, category)
-	CANET("Canet", 1, true, true, 1, 0),
-	CLOPES("Clopes", 8, false, true, 1, 0);
+	GREC("Grec", 5, true, true, 1, false), // (id, sellPrice, useInstant, consumable, rarity, isEquipment)
+	CANET("Canet", 1, true, true, 1, false),
+	CLOPES("Clopes", 8, false, true, 1, false),
+	SCHLASS_COURSIER("Schlass du Coursier", 10, false, false, 2, true);
 	
 	private String id;
 	private int sellPrice, rarity;
-	private int category; // 1 for equipments, 0 for the rest
+	private boolean isEquipment; // 1 for equipments, 0 for the rest
 	
 
 	private boolean useInstant, consumable;
 	
-	private ItemType(String id, int sellPrice, boolean useInstant, boolean consumable, int rarity, int category) {
+	private ItemType(String id, int sellPrice, boolean useInstant, boolean consumable, int rarity, boolean isEquipment) {
 		this.id = id;
 		this.sellPrice = sellPrice;
 		this.useInstant = useInstant;
 		this.consumable = consumable;
 		this.rarity = rarity;
-		this.category = category;
+		this.isEquipment = isEquipment;
+	}
+	
+	public boolean isEquipment() {
+		return this.isEquipment;
 	}
 
 	public boolean isUseInstant() {
