@@ -6,6 +6,9 @@ public class SchlassCoursier extends Item{
 	
 	public SchlassCoursier() {
 		super(ItemType.SCHLASS_COURSIER, srcIcon);
+		setDescription("Ce couteau a été perdu par un coursier HubertEats maladroit.");
+		setAtkBonus(5);
+		setDefBonus(3);
 	}
 
 }

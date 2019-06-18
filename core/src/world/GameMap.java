@@ -27,8 +27,11 @@ import entities.HitlerPoivrot;
 import entities.MalikLePretentieux;
 import entities.Player;
 import entities.monsters.MonstreVert1;
+import items.BasChampi;
+import items.CasquetteMoche;
 import items.Clopes;
 import items.Grec;
+import items.HautChampi;
 import items.SchlassCoursier;
 import menus.ChooseCharac;
 import menus.Inventory;
@@ -76,6 +79,9 @@ public abstract class GameMap {
 		
 		played_entities = new Entity[3];
 		played_entities[0] = new Player(150, 150, this, true, false);
+		played_entities[0].setWeapon(new SchlassCoursier());
+		played_entities[0].setTopEquipment(new HautChampi());
+		played_entities[0].setBotEquipment(new BasChampi());
 		entities.add(played_entities[0]);
 		entities.add(new MalikLePretentieux(450, 700, this, true, false));
 		entities.add(new HitlerPoivrot(500, 700, this, true, false));
@@ -101,7 +107,7 @@ public abstract class GameMap {
 		this.stage = new Stage();
 		Gdx.input.setInputProcessor(stage);
 		Entity.setStage(stage);
-		inventory = new Inventory(stage);
+		inventory = new Inventory(stage, played_entities[0]);
 		addFirstItems(inventory);
 		
 		//assMan = new GameAssetManager();

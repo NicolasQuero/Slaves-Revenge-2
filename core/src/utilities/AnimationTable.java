@@ -3,10 +3,13 @@ package utilities;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+
+import items.Item;
 
 public class AnimationTable extends Actor {
 	
@@ -16,13 +19,16 @@ public class AnimationTable extends Actor {
 	
 	Texture bg, icon;
 	
+	Item item;
+	
 	float stateTime;
 	
 	float x, y;
 	
 	private int id;
 	private int[] borderWidth = new int[4];
-	private boolean animated;
+	private boolean animated, isItem;
+	private static BitmapFont font = new BitmapFont();
 	
 	public AnimationTable(Animation<?> anim) {
 		this.anim = anim;
@@ -30,6 +36,7 @@ public class AnimationTable extends Actor {
 		frameTime = anim.getFrameDuration();
 		currentFrame = 0;
 		this.animated = true;
+		this.isItem = false;
 	}
 	
 	public AnimationTable(String src_bg, Texture icon, int borderWidth) {
@@ -40,6 +47,7 @@ public class AnimationTable extends Actor {
 			this.borderWidth[i] = borderWidth;
 		}
 		this.animated = false;
+		this.isItem = false;
 	}
 	
 	public AnimationTable(String src_bg, Texture icon, int padLeft, int padBot, int padRight, int padTop) {
@@ -51,6 +59,20 @@ public class AnimationTable extends Actor {
 		this.borderWidth[2] = padRight;
 		this.borderWidth[3] = padTop;
 		this.animated = false;
+		this.isItem = false;
+	}
+	
+	public AnimationTable(Texture bg, Item item, int padLeft, int padBot, int padRight, int padTop) {
+		this.bg = bg;
+		this.icon = item.getIcon();
+		id = 1;
+		this.borderWidth[0] = padLeft;
+		this.borderWidth[1] = padBot;
+		this.borderWidth[2] = padRight;
+		this.borderWidth[3] = padTop;
+		this.animated = false;
+		this.isItem = true;
+		this.item = item;
 	}
 	
 	public AnimationTable(Texture icon) {
@@ -60,12 +82,24 @@ public class AnimationTable extends Actor {
 			this.borderWidth[i] = 0;
 		}
 		this.animated = false;
+		isItem = false;
 	}
 	
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		if (animated && anim.getKeyFrame(stateTime) != null)
 			batch.draw((TextureRegion) anim.getKeyFrame(stateTime, true), super.getX(), super.getY(), super.getWidth(), super.getHeight());
+		else if (this.isItem) {
+			if (bg != null) {
+				batch.draw(bg, super.getX(), super.getY(), super.getWidth(), super.getHeight());
+				batch.draw(icon, super.getX() + borderWidth[0], super.getY() + borderWidth[1]
+						, super.getWidth() - borderWidth[0] - borderWidth[2], super.getHeight() - borderWidth[1] - borderWidth[3]);
+				font.draw(batch, "ATK + " + item.getAtkBonus(), super.getX() + 5, super.getY() - 6);
+				font.draw(batch, "DEF + " + item.getDefBonus(), super.getX() + 5, super.getY() - 22);
+			}
+			else
+				batch.draw(icon, super.getX(), super.getY(), super.getWidth(), super.getHeight());
+		}	
 		else if (!animated && icon != null) {
 			if (bg != null) {
 				batch.draw(bg, super.getX(), super.getY(), super.getWidth(), super.getHeight());
@@ -80,6 +114,13 @@ public class AnimationTable extends Actor {
 	@Override
 	public void act (float delta) {
 		this.stateTime += delta;
+	}
+	
+	public Item getItem() {
+		if (isItem)
+			return item;
+		else
+			return null;
 	}
 	
 	public void setIcon(Texture icon) {

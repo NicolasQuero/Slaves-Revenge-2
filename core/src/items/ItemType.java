@@ -5,7 +5,10 @@ public enum ItemType {
 	GREC("Grec", 5, true, true, 1, false), // (id, sellPrice, useInstant, consumable, rarity, isEquipment)
 	CANET("Canet", 1, true, true, 1, false),
 	CLOPES("Clopes", 8, false, true, 1, false),
-	SCHLASS_COURSIER("Schlass du Coursier", 10, false, false, 2, true);
+	SCHLASS_COURSIER("Schlass du Coursier", 10, false, false, 2, true),
+	CASQUETTE_MOCHE("Casquette Laide", 5, false, false, 2, true),
+	HAUT_CHAMPI("Haut du Champi", 7, false, false, 3, true),
+	BAS_CHAMPI("Bas du Champi", 6, false, false, 3, true);
 	
 	private String id;
 	private int sellPrice, rarity;
@@ -21,6 +24,7 @@ public enum ItemType {
 		this.consumable = consumable;
 		this.rarity = rarity;
 		this.isEquipment = isEquipment;
+		
 	}
 	
 	public boolean isEquipment() {

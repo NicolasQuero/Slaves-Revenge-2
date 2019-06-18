@@ -22,6 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
+import entities.Entity;
 import items.Item;
 import utilities.AnimationTable;
 import utilities.BaseActor;
@@ -38,7 +39,11 @@ public class Inventory extends BaseActor {
 	private static Drawable leftBackground = new TextureRegionDrawable(new Texture("menus/inventory/inventoryLeftBg.png"));
 	private static Drawable rightBackground = new TextureRegionDrawable(new Texture("menus/inventory/inventoryRightBg.png"));
 	private static Drawable inventoryBackground = new TextureRegionDrawable(new Texture("menus/inventory/inventory_items_bg.png"));
+	private static Drawable equipedBackground = new TextureRegionDrawable(new Texture("menus/inventory/equiped_bg.png"));
+	private static Drawable selectedBackground = new TextureRegionDrawable(new Texture("menus/inventory/selected_background.png"));
 	private static Drawable selectedDescriptionBackground = new TextureRegionDrawable(new Texture("menus/inventory/selected_description_bg.png"));
+	
+	private static Texture selectedItemBackground = new Texture("menus/inventory/selected_item_bg.png");
 	
 	private Label.LabelStyle baseLabelStyle = new Label.LabelStyle(font, Color.WHITE);
 	
@@ -55,13 +60,16 @@ public class Inventory extends BaseActor {
 	private ArrayList<Item> resInventory;
 	private ArrayList<AnimationTable> resImages, itemImages;
 	private Texture default_icon = new Texture("menus/inventory/default_selected_item.png");
+	private static String default_description = "Aucun item n'est sélectionné \n Ta grosse daronne pue des pieds aaaaaaaaaaaa \n Ton dar le pd \n Fume des opiacées";
 	private AnimationTable selected_item_icon;
 	private Label selected_item_description;
-	private Table selectedItemDescriptionTable;
+	private Table selectedTable, equipedTable, selectedItemDescriptionTable;
 	private int money;
 	private boolean equipmentFocused;
+	private Item[] equipedItems;
+	private AnimationTable[] equipedItemsIcons = new AnimationTable[3];
 
-	public Inventory(Stage stage) {
+	public Inventory(Stage stage, Entity player) {
 		super(Gdx.graphics.getWidth()/2 - INVENTORY_WIDTH/2, Gdx.graphics.getHeight()/2 - INVENTORY_HEIGHT/2 + 20, stage);
 		this.stage = stage;
 		this.remove();
@@ -76,13 +84,18 @@ public class Inventory extends BaseActor {
 		this.itemImages = new ArrayList<AnimationTable>();
 		this.resImages = new ArrayList<AnimationTable>();
 		this.selected_item_icon = new AnimationTable("menus/inventory/selected_item_bg.png", default_icon, 1, 3, 3, 1);
-		this.selected_item_description = new Label("Aucun item n'est sélectionné \n Ta grosse daronne pue des pieds aaaaaaaaaaaa \n Ton dar le pd \n Fume des opiacées", baseLabelStyle);
+		this.selected_item_description = new Label(default_description, baseLabelStyle);
+		this.equipedItems = player.getEquipedItems();
+		constructEquiped(equipedItems, equipedItemsIcons);
+		
 		
 		buttons_atlas = new TextureAtlas(Gdx.files.internal("menus/inventory/inventory_buttons.pack"));
 		mySkin = new Skin(buttons_atlas);
 		mainTable = new Table(mySkin);
 		leftTable = new Table(mySkin);
 		rightTable = new Table(mySkin);
+		selectedTable = new Table(mySkin);
+		equipedTable = new Table(mySkin);
 		selectedItemDescriptionTable = new Table(mySkin);
 		TextButtonStyle equipmentButtonStyle = new TextButtonStyle();
 		equipmentButtonStyle.up = mySkin.getDrawable("equipements_btn_up");
@@ -144,29 +157,46 @@ public class Inventory extends BaseActor {
 		rightTableCont.setSize(371, 470);
 		rightTableCont.setPosition(Gdx.graphics.getWidth()/1280 * 401, Gdx.graphics.getHeight()/800 * 40);
 		
-		mainTable.setBackground(background);
+		mainTable.setBackground(background); // table of the whole inventory
 		mainTable.setFillParent(false);
 		mainTable.setWidth(Gdx.graphics.getWidth() / 1280 * 800);
 		mainTable.setHeight(Gdx.graphics.getHeight() / 800 * 600);
 		mainTable.setPosition(Gdx.graphics.getWidth()/2 - this.getWidth()/2, Gdx.graphics.getHeight()/2 - this.getHeight()/2 + 20);
 		
-		leftTable.setBackground(leftBackground);
+		leftTable.setBackground(leftBackground); // Left part of the table
 		leftTable.setFillParent(false);
 		leftTable.setWidth(Gdx.graphics.getWidth() / 1280 * 321);
 		leftTable.setHeight(Gdx.graphics.getHeight() / 800 * 470);
 		leftTable.setPosition(Gdx.graphics.getWidth()/1280 * 50, Gdx.graphics.getHeight()/800 * 40);
-		leftTable.bottom().left();
+		
+		equipedTable.setBackground(equipedBackground);
+		equipedTable.setFillParent(false);
+		equipedTable.setWidth(Gdx.graphics.getWidth() / 1280 * 264);
+		equipedTable.setHeight(Gdx.graphics.getHeight() / 800 * 201);
+		equipedTable.add(equipedItemsIcons[0]).prefWidth(68).prefHeight(68).padLeft(10).padBottom(20).padTop(45);
+		equipedTable.add(equipedItemsIcons[1]).prefWidth(68).prefHeight(68).padLeft(10).padBottom(20).padTop(45);
+		equipedTable.add(equipedItemsIcons[2]).prefWidth(68).prefHeight(68).padLeft(10).padBottom(20).padTop(45).padRight(10);
+		
+		
+		leftTable.add(equipedTable).pad(10);
 		leftTable.row();
-		leftTable.add(selected_item_icon).padBottom(104 + 28).padLeft(15 + 29).prefWidth(68).prefHeight(68);
+		
+		selectedTable.setBackground(selectedBackground); // bottom left table to select an item and show its description
+		selectedTable.setFillParent(false);
+		selectedTable.setWidth(Gdx.graphics.getWidth() / 1280 * 264);
+		selectedTable.setHeight(Gdx.graphics.getHeight() / 800 * 201);
+		selectedTable.add(selected_item_icon).padBottom(104).padLeft(10).prefWidth(68).prefHeight(68);
 		selectedItemDescriptionTable.setBackground(selectedDescriptionBackground);
 		selectedItemDescriptionTable.setFillParent(false);
-		selectedItemDescriptionTable.setWidth(Gdx.graphics.getWidth() / 1280 * 155);
+		selectedItemDescriptionTable.setWidth(Gdx.graphics.getWidth() / 1280 * 180);
 		selectedItemDescriptionTable.setHeight(Gdx.graphics.getHeight() / 800 * 156);
+		selectedItemDescriptionTable.top();
 		selected_item_description.setWrap(true);
-		selectedItemDescriptionTable.add(selected_item_description).pad(10)
+		selectedItemDescriptionTable.add(selected_item_description).top().pad(10)
 		.prefWidth(selectedItemDescriptionTable.getWidth() - 20).prefHeight(selectedItemDescriptionTable.getHeight() - 20);
-		leftTable.add(selectedItemDescriptionTable).padLeft(14).padBottom(50)
-		.prefWidth(Gdx.graphics.getWidth() / 1280 * 155).prefHeight(Gdx.graphics.getHeight() / 800 * 156);
+		selectedTable.add(selectedItemDescriptionTable).pad(10)
+		.prefWidth(selectedItemDescriptionTable.getWidth()).prefHeight(selectedItemDescriptionTable.getHeight());
+		leftTable.add(selectedTable).pad(10);
 		
 		rightTable.setBackground(rightBackground);
 		rightTable.setFillParent(false);
@@ -191,7 +221,7 @@ public class Inventory extends BaseActor {
 		equInventoryTable.top().left();
 		
 		rightTableCont.setActor(rightTable);
-		rightTable.add(inventoryTable).expandY().padBottom(54).padTop(25).colspan(4);
+		rightTable.add(inventoryTable).expandY().pad(10).colspan(4);
 		mainTable.addActor(leftTable);
 		mainTable.addActor(rightTable);
 		//mainTable.debug();
@@ -207,6 +237,8 @@ public class Inventory extends BaseActor {
 	public void close() {
 		mainTable.remove();
 		super.remove();
+		selected_item_icon.setIcon(default_icon);
+		selected_item_description.setText(default_description);
 	}
 	
 	public void dispose() {
@@ -261,6 +293,18 @@ public class Inventory extends BaseActor {
 			else {
 				equInventory.add(item);
 				itemImages.add(new AnimationTable(item.getIcon()));
+				itemImages.get(equNbItems).addListener(new InputListener() {
+					@Override
+		            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+						selected_item_icon.setIcon(item.getIcon());
+						selected_item_description.setText(item.getId() + "\n\n ATK + " + item.getAtkBonus() + "\n DEF + " + item.getDefBonus());
+					}
+					@Override
+		            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+						return true;
+					}
+						
+					});
 				if (equNbItems / 4 == 0) { // first row
 					if (equNbItems % 4 == 0) // first item
 						equInventoryTable.add(itemImages.get(equNbItems)).padLeft(12).padTop(16).prefWidth(64).prefHeight(64);
@@ -303,12 +347,63 @@ public class Inventory extends BaseActor {
 		this.money -= amount;
 	}
 	
-	public boolean contains(Item item) {
+	public void constructEquiped(Item[] equipedItems, AnimationTable[] equipedItemsIcons) {
+		if (equipedItems[0] != null && equipedItems[0].getIcon() != null) {
+			equipedItemsIcons[0] = new AnimationTable(selectedItemBackground, equipedItems[0], 1, 3, 3, 1);
+			equipedItemsIcons[0].addListener(new InputListener() {
+			@Override
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+				selected_item_icon.setIcon(equipedItemsIcons[0].getItem().getIcon());
+				selected_item_description.setText(equipedItems[0].getId() + "\n\n ATK + " + equipedItems[0].getAtkBonus() + "\n DEF + " + equipedItems[0].getDefBonus());
+            }
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }});
+		}
+		else
+			equipedItemsIcons[1] = new AnimationTable("menus/inventory/selected_item_bg.png", default_icon, 1, 3, 3, 1);
+		
+		if (equipedItems[1] != null && equipedItems[1].getIcon() != null) {
+			equipedItemsIcons[1] = new AnimationTable(selectedItemBackground, equipedItems[1], 1, 3, 3, 1);
+			equipedItemsIcons[1].addListener(new InputListener() {
+			@Override
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+				selected_item_icon.setIcon(equipedItemsIcons[1].getItem().getIcon());
+				selected_item_description.setText(equipedItems[1].getId() + "\n\n ATK + " + equipedItems[1].getAtkBonus() + "\n DEF + " + equipedItems[1].getDefBonus());
+            }
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }});
+		}
+		else
+			equipedItemsIcons[1] = new AnimationTable("menus/inventory/selected_item_bg.png", default_icon, 1, 3, 3, 1);
+		
+		if (equipedItems[2] != null && equipedItems[2].getIcon() != null) {
+			equipedItemsIcons[2] = new AnimationTable(selectedItemBackground, equipedItems[2], 1, 3, 3, 1);
+			equipedItemsIcons[2].addListener(new InputListener() {
+			@Override
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+				selected_item_icon.setIcon(equipedItemsIcons[2].getItem().getIcon());
+				selected_item_description.setText(equipedItems[2].getId() + "\n\n ATK + " + equipedItems[2].getAtkBonus() + "\n DEF + " + equipedItems[2].getDefBonus());
+            }
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }});
+		}
+		else
+			equipedItemsIcons[2] = new AnimationTable("menus/inventory/selected_item_bg.png", default_icon, 1, 3, 3, 1);
+		
+	}
+	
+	/*public boolean contains(Item item) {
 		for (Item i : inventory) {
 			if (i.getId().equals(item.getId()))
 				return true;
 		}
 		return false;
-	}
+	}*/
 	
 }

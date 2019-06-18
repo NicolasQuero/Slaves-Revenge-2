@@ -18,6 +18,7 @@ import utilities.GameAssetManager;
 
 import PopUps.LvlUpPopUp;
 import Spells.Spell;
+import items.Item;
 import world.GameMap;
 
 public abstract class Entity {
@@ -37,6 +38,7 @@ public abstract class Entity {
 	protected Texture icon;
 	protected float dist_closest_ent;
 	Entity[] target = new Entity[1];
+	private Item[] equipedItems;
 	
 	
 	public static void setMap(GameMap map) {
@@ -53,7 +55,7 @@ public abstract class Entity {
 
 	protected final static int[] xp_palliers = {100, 300, 600, 1000, 1500, 2500, 4000, 6000, 9000,
 											13000, 18000, 24000, 31000, 39000, 48000, 58000, 70000, 85000, 100000, 120000}; // paliers de niveaux
-	protected int ATK, DEF;
+	protected int ATK, atkBonus, DEF, defBonus;
 	protected float maxHP, HP;
 	protected int maxMP, MP;
 	protected int mana_regen;
@@ -116,6 +118,7 @@ public abstract class Entity {
 		this.ENT_ANIM_SPEED_RUN = entanimspeedrun;
 		this.moves = 'n';
 		this.maxHP = 1000; this.HP = maxHP; this.maxMP = 100; this.MP = maxMP; this.ATK = 10; this.DEF = 10; this.mana_regen = 2; this.alive = true;
+		this.atkBonus = 0; this.defBonus = 0;
 		this.aggro = false;
 		this.is_npc = true;
 		this.interaction_rectangle = new Rectangle(x - 25, y - 25, ENT_WIDTH + 50, ENT_WIDTH + 50);
@@ -126,11 +129,39 @@ public abstract class Entity {
 		this.dist_closest_ent = 10000f;
 		this.dashTimer = 0f;
 		this.isDashing = false;
-		
+		this.equipedItems = new Item[3];
 		
 		ent_anim_count = 0;
 		stateTime = 0;
 		courseTimer = 0;
+	}
+	
+	public void setWeapon(Item item) {
+		if (equipedItems[0] != null) {
+			this.atkBonus -= equipedItems[0].getAtkBonus();
+		}
+		this.equipedItems[0] = item;
+		this.atkBonus += item.getAtkBonus();
+	}
+	
+	public void setTopEquipment(Item item) {
+		if (equipedItems[1] != null) {
+			this.atkBonus -= equipedItems[1].getAtkBonus();
+		}
+		this.equipedItems[1] = item;
+		this.atkBonus += item.getAtkBonus();
+	}
+	
+	public void setBotEquipment(Item item) {
+		if (equipedItems[2] != null) {
+			this.atkBonus -= equipedItems[2].getAtkBonus();
+		}
+		this.equipedItems[2] = item;
+		this.atkBonus += item.getAtkBonus();
+	}
+	
+	public Item[] getEquipedItems() {
+		return this.equipedItems;
 	}
 	
 	public void setPos(Vector2 pos) {
