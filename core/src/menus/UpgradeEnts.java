@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -45,12 +46,13 @@ public class UpgradeEnts {
 	Vector3 touchPos = new Vector3();
 	BitmapFont font = new BitmapFont();
 	BitmapFont fontBig = new BitmapFont();
-	private static Drawable upgrade_bg = new TextureRegionDrawable(new Texture("menus/upgrade_charac_bg.png"));
-	private static Drawable upgrade_bg_left = new TextureRegionDrawable(new Texture("menus/upgrade_charac/upgrade_bg_left.png"));
+	private static Drawable upgrade_bg = new TextureRegionDrawable(new Texture("menus/upgrade_charac/upgrade_bg_right.png"));
+	private static Drawable upgrade_bg_left = new TextureRegionDrawable(new Texture("menus/upgrade_charac/upgrade_bg_lefthell.png"));
 
 	private static Image icon_under_d = new Image(new Texture("menus/upgrade_charac/icon_under_d.png"));
 	private static Image icon_under_g = new Image(new Texture("menus/upgrade_charac/icon_under_g.png"));
 	private static Image icon_player = new Image(new Texture("menus/upgrade_charac/icon_player.png"));
+	private NinePatch text_bg = new NinePatch(new Texture("menus/upgrade_charac/text_bg.png"));
 	
 	private String SPELL_BG_SRC = "menus/upgrade_charac/upgrade_spell_bg.png";
 	private String ULT_BG_SRC = "menus/upgrade_charac/upgrade_ult_bg.png";
@@ -97,9 +99,10 @@ public class UpgradeEnts {
 	private Label entUpPtsLabel = new Label("", new Label.LabelStyle(font, Color.WHITE));
 	
 	public UpgradeEnts(ArrayList<Entity> entities, Entity[] played_entities) {
+		text_bg.setPadding(3, 3, 3, 3);
 		font.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		fontBig.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		fontBig.getData().setScale(2);;
+		fontBig.getData().setScale(2);
 		this.entities = entities;
 		stateTime = 0f;
 		this.stage = new Stage();
@@ -109,8 +112,8 @@ public class UpgradeEnts {
 			if (ent != null) {
 				this.played_entities[i] = ent;
 				if (i == 0) {
-					entAtkLabel.setText("ATK : " + ent.getATK());
-					entDefLabel.setText("DEF : " + ent.getDEF());
+					entAtkLabel.setText("ATK : " + (ent.getATK()-ent.getAtkBonus()) + " (+" + ent.getAtkBonus() + ")");
+					entDefLabel.setText("DEF : " + (ent.getDEF()-ent.getDefBonus()) + " (+" + ent.getDefBonus() + ")");
 					entUpPtsLabel.setText("Points restants : " + ent.getUpPts());
 					entName.setText(ent.getType().getId() + " : LVL " + ent.getLvl_ent());
 					icon_player_t = new AnimationTable("menus/upgrade_charac/icon_player.png", ent.getIcon(), 3);
@@ -176,7 +179,7 @@ public class UpgradeEnts {
                 if (played_entities[0].getUpPts() > 0) {
                 	played_entities[0].addUpPts(-1);
                 	played_entities[0].addAtk(1);
-					entAtkLabel.setText("ATK : " + played_entities[0].getATK());
+					entAtkLabel.setText("ATK : " + (played_entities[0].getATK()-played_entities[0].getAtkBonus()) + " (+" + played_entities[0].getAtkBonus() + ")");
 					entUpPtsLabel.setText("Points restants : " + played_entities[0].getUpPts());
                 }
                 return true;
@@ -195,12 +198,11 @@ public class UpgradeEnts {
                 if (played_entities[0].getUpPts() > 0) {
                 	played_entities[0].addUpPts(-1);
                 	played_entities[0].addDef(1);
-					entDefLabel.setText("DEF : " + played_entities[0].getDEF());
+					entDefLabel.setText("DEF : " + (played_entities[0].getDEF()-played_entities[0].getDefBonus()) + " (+" + played_entities[0].getDefBonus() + ")");
 					entUpPtsLabel.setText("Points restants : " + played_entities[0].getUpPts());
                 }
                 return true;
 		}});
-		
 		
 		buttonSpellPlus[0] = new TextButton("+", textButtonStyle);
 		buttonSpellPlus[0].pad(10);
@@ -220,7 +222,6 @@ public class UpgradeEnts {
 	                return true;
 			}});
 		
-		
 		buttonSpellPlus[1] = new TextButton("+", textButtonStyle);
 		buttonSpellPlus[1].pad(10);
 		buttonSpellPlus[1].addListener(new InputListener() {
@@ -239,7 +240,6 @@ public class UpgradeEnts {
 	                return true;
 			}});
 		
-		
 		buttonSpellPlus[2] = new TextButton("+", textButtonStyle);
 		buttonSpellPlus[2].pad(10);
 		buttonSpellPlus[2].addListener(new InputListener() {
@@ -257,8 +257,7 @@ public class UpgradeEnts {
 	                }
 	                return true;
 			}});
-		
-		
+
 		buttonSpellPlus[3] = new TextButton("+", textButtonStyle);
 		buttonSpellPlus[3].pad(10);
 		buttonSpellPlus[3].addListener(new InputListener() {
@@ -276,8 +275,6 @@ public class UpgradeEnts {
 	                }
 	                return true;
 			}});
-		
-		
 		
 		buttonMinus = new TextButton("-", textButtonStyle);
 		buttonMinus.pad(10);

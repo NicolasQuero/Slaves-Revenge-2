@@ -11,11 +11,16 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import buildings.Building;
+import buildings.Comico;
+import buildings.LeCrasseux;
 import combats.Combat;
 import combats.CombatTD;
 import decors.Voiture;
@@ -26,6 +31,7 @@ import entities.GirlRedhead;
 import entities.HitlerPoivrot;
 import entities.MalikLePretentieux;
 import entities.Player;
+import entities.monsters.Controlleur;
 import entities.monsters.MonstreVert1;
 import items.BasChampi;
 import items.CasquetteMoche;
@@ -70,7 +76,14 @@ public abstract class GameMap {
 	private Stage stage;
 	public GameAssetManager assMan;
 	
+	public static float GAME_TIME;
+	public static String language;
+	
+	private ArrayList<Building> buildings;
+	
 	public GameMap () {
+		language = "fr";
+		GAME_TIME = 0f;
 		time = 0f; regen_time = 0f;
 		ips = 0;
 		entities = new ArrayList<Entity>();
@@ -90,7 +103,8 @@ public abstract class GameMap {
 		entities.add(new BearNice(300,150,this,false, false));
 		pnj_entities.add(new BossWhite(400, 650, this, false, true));
 		pnj_entities.add(new HitlerPoivrot(500, 700, this, false, true));
-		pnj_entities.add(new MonstreVert1(800, 700, this));
+		//pnj_entities.add(new MonstreVert1(800, 700, this));
+		//pnj_entities.add(new Controlleur(200, 450, this));
 		
 		played_entities[1] = entities.get(1);
 		played_entities[2] = entities.get(2);
@@ -110,6 +124,12 @@ public abstract class GameMap {
 		inventory = new Inventory(stage, played_entities[0]);
 		addFirstItems(inventory);
 		
+		buildings = new ArrayList<Building>();
+		buildings.add(new LeCrasseux(stage, played_entities[0]));
+		buildings.add(new Comico(stage, played_entities[0]));
+		
+		setListeners(stage);
+		
 		//assMan = new GameAssetManager();
 		//assMan.queueAddImages();
 		//assMan.manager.finishLoading();
@@ -117,6 +137,9 @@ public abstract class GameMap {
 	
 	
 	public void render (OrthographicCamera camera, SpriteBatch batch, float delta) {
+		GAME_TIME += delta/10;
+		if(GAME_TIME > 24)
+			GAME_TIME = 0f;
 		show_ips(delta);
 		if (!in_combat) {
 			if (Gdx.input.isKeyJustPressed(Keys.K)) {
@@ -172,17 +195,17 @@ public abstract class GameMap {
 			}
 			for (Entity entity : pnj_entities) { // render npcs
 				if (entity != null && entity.isAlive()) {
-						entity.render_unplayed(batch, delta);
+						entity.render(batch, delta);
 					if (entity.getInteraction_rectangle().contains(played_entities[0].getCenter())) { // if the player is close to an npc
 						font.draw(batch, "E", entity.getX() + 64, entity.getY() + 36);
-						if ((Gdx.input.isKeyJustPressed(Keys.E) || entity.isAggro()) && isOneAlive(played_entities)) {
+						/*if ((Gdx.input.isKeyJustPressed(Keys.E) || entity.isAggro()) && isOneAlive(played_entities)) {
 							combatMap = new CombatMapTD("cite");
 							combat = new CombatTD(camera, combatMap, played_entities, entity);
 							ennemy[0] = entity;
 							combatMap.setCombat(combat);
 							in_combat = true;
 							break;
-						}
+						}*/
 					}
 				}
 			}
@@ -207,6 +230,7 @@ public abstract class GameMap {
 			if (Gdx.input.isKeyJustPressed(Keys.ESCAPE) && upgrade_ents_open) {
 				upgrade_ents_open = false;
 				upgradeEnts.dispose();
+				Gdx.input.setInputProcessor(stage);
 			}
 			if (Gdx.input.isKeyJustPressed(Keys.ESCAPE) && inventory_open) {
 				inventory_open = false;
@@ -268,7 +292,7 @@ public abstract class GameMap {
 				Gdx.input.setInputProcessor(stage);
 			}
 		}
-		
+
 		
 	}
 	
@@ -285,27 +309,27 @@ public abstract class GameMap {
 		float y = ent.getRekt().getY() + amountY;
 		float width = ent.getRekt().getWidth();
 		float height = ent.getRekt().getHeight();
-		Rectangle coll_rect = new Rectangle(x, y, width, height);
+		Rectangle coll_rect = ent.getRekt();
 		coll_rect.setPosition(x, y); // We create a new rectangle at the position where the entity wants to go 
 		
 		if(x<0 || y<100 || x + width > this.getPixelWidth() || y + height > this.getPixelHeight()) { // We check whether it collides with the border or not
 			System.out.println(x + width + " " + y + height);
 			return true;
 		}
-	
+
 		for (int row = (int) (y / TileType.TILE_SIZE_PIXEL); row < Math.ceil((y + height) / TileType.TILE_SIZE_PIXEL); row++ ) { // 1 We check if the entity can go on the potential TileTypes
 			for (int col = (int) (x / TileType.TILE_SIZE_PIXEL); col < Math.ceil((x + height) / TileType.TILE_SIZE_PIXEL); col++ ) { // 2 surrounding the target position
 				for (int layer = 0; layer < getLayers(); layer++ ) { // Check all layers of the TiledMaps
 					TileType type = null;
-					
+					//System.out.println(layer);
 					int objectLayerId = 3; // ALL THE OBJECTS MUST BE IN THE LAYER objectLayerId !
 					
 					if (layer != objectLayerId) { // The layer objectLayerId contains the objects, you mustn't use getTile on it !
 						type = getTileTypeByCoordinates(layer, col, row); // gives the tileType at the target position
 					}
 					
-					else if (this.getObjectCollisionWithEntity(objectLayerId, coll_rect, pnj_entities)){ // Object layer
-						//return true; // collision happened with an object in the object layer
+					else if (this.getObjectCollisionWithEntity(objectLayerId, coll_rect, pnj_entities)) { // Object layer
+						return true; // collision happened with an object in the object layer
 					}
 					if (type != null && type.isCollidable()) {
 						//System.out.println(type.getName());
@@ -406,6 +430,34 @@ public abstract class GameMap {
 			inventory.addItem(new Grec());
 		}
 		inventory.addItem(new SchlassCoursier());
+	}
+	
+	public void setListeners(Stage stage) {
+		stage.addListener(new InputListener() {
+				@Override
+				public boolean keyDown(InputEvent event, int keycode) {
+					switch (keycode) {
+						case Keys.E:
+							for (Building building : buildings) {
+								if (building.getHitbox().contains(played_entities[0].getCenter())) {
+									building.enterBuilding();
+									break;
+								}
+							}
+							for (Entity ent : pnj_entities) {
+								if (ent.getInteraction_rectangle().contains(played_entities[0].getCenter())) {
+									combatMap = new CombatMapTD("cite");
+									combat = new CombatTD((OrthographicCamera) stage.getCamera(), combatMap, played_entities, ent);
+									ennemy[0] = ent;
+									combatMap.setCombat(combat);
+									in_combat = true;
+									break;
+								}
+							}
+					}
+					return false;
+				}
+		});
 	}
 	
 }

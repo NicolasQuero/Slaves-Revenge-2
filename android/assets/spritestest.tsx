@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.2" tiledversion="1.2.3" name="spritestest" tilewidth="192" tileheight="192" tilecount="381" columns="0">
+<tileset version="1.2" tiledversion="1.2.3" name="spritestest" tilewidth="192" tileheight="192" tilecount="388" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="1">
   <image width="60" height="60" source="eau.png"/>
@@ -1555,5 +1555,34 @@
  </tile>
  <tile id="674">
   <image width="192" height="192" source="houses/comico_roof/comico_roof6.png"/>
+ </tile>
+ <tile id="693">
+  <image width="192" height="192" source="houses/ligne_16_entrance/ligne_16_entrance0.png"/>
+  <animation>
+   <frame tileid="693" duration="150"/>
+   <frame tileid="694" duration="150"/>
+   <frame tileid="695" duration="150"/>
+   <frame tileid="696" duration="150"/>
+   <frame tileid="697" duration="150"/>
+   <frame tileid="698" duration="150"/>
+  </animation>
+ </tile>
+ <tile id="694">
+  <image width="192" height="192" source="houses/ligne_16_entrance/ligne_16_entrance1.png"/>
+ </tile>
+ <tile id="695">
+  <image width="192" height="192" source="houses/ligne_16_entrance/ligne_16_entrance2.png"/>
+ </tile>
+ <tile id="696">
+  <image width="192" height="192" source="houses/ligne_16_entrance/ligne_16_entrance3.png"/>
+ </tile>
+ <tile id="697">
+  <image width="192" height="192" source="houses/ligne_16_entrance/ligne_16_entrance4.png"/>
+ </tile>
+ <tile id="698">
+  <image width="192" height="192" source="houses/ligne_16_entrance/ligne_16_entrance5.png"/>
+ </tile>
+ <tile id="699">
+  <image width="64" height="64" source="decors/metro_floor.png"/>
  </tile>
 </tileset>

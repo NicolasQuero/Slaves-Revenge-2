@@ -13,11 +13,11 @@ import entities.Entity;
 import entities.EntityType;
 import world.GameMap;
 
-public class Monster extends Entity {
+public abstract class Monster extends Entity {
 
-	private static final float MONSTER_ANIM_SPEED = 0.5f;
-	private static final int MONSTER_WIDTH = 32;
-	private static final int MONSTER_HEIGHT = 32;
+	private static final float MONSTER_ANIM_SPEED = 0.125f;
+	private static final int MONSTER_WIDTH = 64;
+	private static final int MONSTER_HEIGHT = 64;
 	
 	Animation<?>[] player_img;
 	
@@ -33,6 +33,10 @@ public class Monster extends Entity {
 		TextureRegion[][] playerSpriteSheet = TextureRegion.split(new Texture(src_img), 32, 32);
 		
 		player_img[0] = new Animation<TextureRegion>(MONSTER_ANIM_SPEED, playerSpriteSheet[0]); // Animation immobile
+		player_img[1] = new Animation<TextureRegion>(MONSTER_ANIM_SPEED, playerSpriteSheet[1]);
+		player_img[2] = new Animation<TextureRegion>(MONSTER_ANIM_SPEED, playerSpriteSheet[2]);
+		player_img[3] = new Animation<TextureRegion>(MONSTER_ANIM_SPEED, playerSpriteSheet[3]);
+		player_img[4] = new Animation<TextureRegion>(MONSTER_ANIM_SPEED, playerSpriteSheet[4]);
 		
 		this.setEntImg(player_img);
 		
@@ -46,8 +50,10 @@ public class Monster extends Entity {
 	
 	@Override
 	public void render(SpriteBatch batch, float delta) {
+		movementOutOfCombat(delta);
 		super.render_unplayed(batch, delta);
 	}
 	
+	abstract public void movementOutOfCombat(float delta);
 	
 }

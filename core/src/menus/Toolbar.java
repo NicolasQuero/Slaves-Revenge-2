@@ -1,5 +1,6 @@
 package menus;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
@@ -7,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import entities.Entity;
+import world.GameMap;
 
 public class Toolbar {
 	
@@ -49,6 +51,8 @@ public class Toolbar {
 			} else {
 				font.draw(batch, "Aucun \npersonnage", x_cam + 92 + pas, y_cam + 80);
 			}
+			font.draw(batch, String.valueOf((int) (GameMap.GAME_TIME)) + " h " + String.valueOf((int) ((GameMap.GAME_TIME - (int) (GameMap.GAME_TIME)) * 60)),
+					x_cam + Gdx.graphics.getWidth()*4/5, y_cam + 50);
 		}
 	}
 }

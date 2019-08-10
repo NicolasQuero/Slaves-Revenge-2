@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 
 import entities.Entity;
+import entities.monsters.Controlleur;
 import entities.monsters.Lambda1;
 import menus.CombatToolbar;
 import world.CombatMap;
@@ -39,7 +40,7 @@ public class CombatTD {
 		this.ennemy[0] = ennemy;
 		ennemies = new ArrayList<Entity>();
 		for (int i = 0; i < 50; i++) {
-			ennemies.add(new Lambda1(i/10 * 100, i%10 * 100, this.combatMap));
+			ennemies.add(new Controlleur(i/10 * 100, i%10 * 100, this.combatMap));
 			ennemies.get(i).setCombatPos(i/10 * 100, i%10 * 100);
 		}
 		ennemies.add(ennemy);

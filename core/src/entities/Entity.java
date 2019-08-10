@@ -136,28 +136,54 @@ public abstract class Entity {
 		courseTimer = 0;
 	}
 	
+	public int getAtkBonus() {
+		return atkBonus;
+	}
+	
+	public int getDefBonus() {
+		return defBonus;
+	}
+	
 	public void setWeapon(Item item) {
 		if (equipedItems[0] != null) {
 			this.atkBonus -= equipedItems[0].getAtkBonus();
+			this.defBonus -= equipedItems[0].getDefBonus();
+			this.ATK -= equipedItems[0].getAtkBonus();
+			this.DEF -= equipedItems[0].getDefBonus();
 		}
 		this.equipedItems[0] = item;
 		this.atkBonus += item.getAtkBonus();
+		this.defBonus += item.getDefBonus();
+		this.ATK += item.getAtkBonus();
+		this.DEF += item.getDefBonus();
 	}
 	
 	public void setTopEquipment(Item item) {
 		if (equipedItems[1] != null) {
 			this.atkBonus -= equipedItems[1].getAtkBonus();
+			this.defBonus -= equipedItems[1].getDefBonus();
+			this.ATK -= equipedItems[1].getAtkBonus();
+			this.DEF -= equipedItems[1].getDefBonus();
 		}
 		this.equipedItems[1] = item;
 		this.atkBonus += item.getAtkBonus();
+		this.defBonus += item.getDefBonus();
+		this.ATK += item.getAtkBonus();
+		this.DEF += item.getDefBonus();
 	}
 	
 	public void setBotEquipment(Item item) {
 		if (equipedItems[2] != null) {
 			this.atkBonus -= equipedItems[2].getAtkBonus();
+			this.defBonus -= equipedItems[2].getDefBonus();
+			this.ATK -= equipedItems[2].getAtkBonus();
+			this.DEF -= equipedItems[2].getDefBonus();
 		}
 		this.equipedItems[2] = item;
 		this.atkBonus += item.getAtkBonus();
+		this.defBonus += item.getDefBonus();
+		this.ATK += item.getAtkBonus();
+		this.DEF += item.getDefBonus();
 	}
 	
 	public Item[] getEquipedItems() {
@@ -303,6 +329,10 @@ public abstract class Entity {
 			this.rect.setX(this.rect.getX() + amountX);
 			this.interaction_rectangle.setX(this.rect.getX());
 		}
+		if(amountX > 0)
+			this.ent_anim_count = 3;
+		else if (amountX < 0)
+			this.ent_anim_count = 2;
 	}
 	
 	public void moveY (float amountY) {
@@ -311,6 +341,10 @@ public abstract class Entity {
 			this.rect.setY(this.rect.getY() + amountY);
 			this.interaction_rectangle.setY(this.rect.getY());
 		}
+		if(amountY > 0)
+			this.ent_anim_count = 4;
+		else if (amountY < 0)
+			this.ent_anim_count = 1;
 	}
 	
 	private void moveCombatX(float amountX) {
@@ -501,102 +535,107 @@ public abstract class Entity {
 
 	public void render(SpriteBatch batch, float delta) {
 		if (!GameMap.choose_charac_open && !GameMap.upgrade_ents_open) {
-			if ((Gdx.input.isKeyPressed(Keys.UP) || Gdx.input.isKeyPressed(Keys.Z)) && (moves == 'u' || moves == 'n')) {
-				moveY(SPEED * delta);
-				if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT))
-					moveY(3*SPEED * delta);
-				moves = 'u';
-				ent_anim_count = 4;
-				courseTimer -= Gdx.graphics.getDeltaTime();
-				if (Math.abs(courseTimer) > ENT_ANIM_SPEED_RUN) {
-					courseTimer = 0;
-				}
-			} else {
-				if (ent_anim_count == 4) {
-					courseTimer += Gdx.graphics.getDeltaTime();
-					if (Math.abs(courseTimer) > 0.05) {
-						moves = 'n';
+			if (isPlayed()) {
+				if ((Gdx.input.isKeyPressed(Keys.UP) || Gdx.input.isKeyPressed(Keys.Z)) && (moves == 'u' || moves == 'n')) {
+					moveY(SPEED * delta);
+					if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT))
+						moveY(3*SPEED * delta);
+					moves = 'u';
+					ent_anim_count = 4;
+					courseTimer -= Gdx.graphics.getDeltaTime();
+					if (Math.abs(courseTimer) > ENT_ANIM_SPEED_RUN) {
 						courseTimer = 0;
-						ent_anim_count = 0;
+					}
+				} else {
+					if (ent_anim_count == 4) {
+						courseTimer += Gdx.graphics.getDeltaTime();
+						if (Math.abs(courseTimer) > 0.05) {
+							moves = 'n';
+							courseTimer = 0;
+							ent_anim_count = 0;
+						}
 					}
 				}
-			}
-			
-			if ((Gdx.input.isKeyPressed(Keys.DOWN) || Gdx.input.isKeyPressed(Keys.S)) && (moves == 'd'||moves == 'n')) {
-				moveY(-SPEED * delta);
-				if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT))
-					moveY(-3*SPEED * delta);
-				moves = 'd';
-				ent_anim_count = 1;
-				courseTimer -= Gdx.graphics.getDeltaTime();
-				if (Math.abs(courseTimer) > ENT_ANIM_SPEED_RUN) {
-					courseTimer = 0;
-				}
-			} else {
-				if (ent_anim_count == 1) {
-					courseTimer += Gdx.graphics.getDeltaTime();
-					if (Math.abs(courseTimer) > 0.05) {
-						moves = 'n';
-						courseTimer = 0;
-						ent_anim_count = 0;
-					}
-				}
-			}
-			
-			if ((Gdx.input.isKeyPressed(Keys.LEFT) || Gdx.input.isKeyPressed(Keys.Q)) && (moves == 'l'||moves == 'n')) {
-				moveX(-SPEED * delta);
-				if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT))
-					moveX(-3*SPEED * delta);
-				moves = 'l';
-				ent_anim_count = 2;
-				courseTimer -= Gdx.graphics.getDeltaTime();
-				if (Math.abs(courseTimer) > ENT_ANIM_SPEED_RUN) {
-					courseTimer = 0;
-				}
-			} else {
-				if (ent_anim_count == 2) {
-					courseTimer += Gdx.graphics.getDeltaTime();
-					if (Math.abs(courseTimer) > 0.05) {
-						moves = 'n';
-						courseTimer = 0;
-						ent_anim_count = 0;
-					}
-				}
-			}
 				
-			if ((Gdx.input.isKeyPressed(Keys.RIGHT) || Gdx.input.isKeyPressed(Keys.D)) && (moves == 'r'||moves == 'n')) {
-				moveX(SPEED * delta);
-				if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT))
-					moveX(3*SPEED * delta);
-				moves = 'r';
-				ent_anim_count = 3;
-				courseTimer -= Gdx.graphics.getDeltaTime();
-				if (Math.abs(courseTimer) > ENT_ANIM_SPEED_RUN) {
-					courseTimer = 0;
-				}
-			} else {
-				if (ent_anim_count == 3) {
-					courseTimer += Gdx.graphics.getDeltaTime();
-					if (Math.abs(courseTimer) > 0.05) {
-						moves = 'n';
+				if ((Gdx.input.isKeyPressed(Keys.DOWN) || Gdx.input.isKeyPressed(Keys.S)) && (moves == 'd'||moves == 'n')) {
+					moveY(-SPEED * delta);
+					if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT))
+						moveY(-3*SPEED * delta);
+					moves = 'd';
+					ent_anim_count = 1;
+					courseTimer -= Gdx.graphics.getDeltaTime();
+					if (Math.abs(courseTimer) > ENT_ANIM_SPEED_RUN) {
 						courseTimer = 0;
-						ent_anim_count = 0;
+					}
+				} else {
+					if (ent_anim_count == 1) {
+						courseTimer += Gdx.graphics.getDeltaTime();
+						if (Math.abs(courseTimer) > 0.05) {
+							moves = 'n';
+							courseTimer = 0;
+							ent_anim_count = 0;
+						}
 					}
 				}
-			}
-			if (Gdx.input.isKeyJustPressed(Keys.H) && Gdx.input.isKeyJustPressed(Keys.W)) {
-				pos.x = (float) (Math.random()*1280); 
-				pos.y = (float) (Math.random()*800);
-				rect.setPosition(pos.x, pos.y);
-				while (map.doesRectCollideWithMap(this, 0, 0)) {
+				
+				if ((Gdx.input.isKeyPressed(Keys.LEFT) || Gdx.input.isKeyPressed(Keys.Q)) && (moves == 'l'||moves == 'n')) {
+					moveX(-SPEED * delta);
+					if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT))
+						moveX(-3*SPEED * delta);
+					moves = 'l';
+					ent_anim_count = 2;
+					courseTimer -= Gdx.graphics.getDeltaTime();
+					if (Math.abs(courseTimer) > ENT_ANIM_SPEED_RUN) {
+						courseTimer = 0;
+					}
+				} else {
+					if (ent_anim_count == 2) {
+						courseTimer += Gdx.graphics.getDeltaTime();
+						if (Math.abs(courseTimer) > 0.05) {
+							moves = 'n';
+							courseTimer = 0;
+							ent_anim_count = 0;
+						}
+					}
+				}
+					
+				if ((Gdx.input.isKeyPressed(Keys.RIGHT) || Gdx.input.isKeyPressed(Keys.D)) && (moves == 'r'||moves == 'n')) {
+					moveX(SPEED * delta);
+					if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT))
+						moveX(3*SPEED * delta);
+					moves = 'r';
+					ent_anim_count = 3;
+					courseTimer -= Gdx.graphics.getDeltaTime();
+					if (Math.abs(courseTimer) > ENT_ANIM_SPEED_RUN) {
+						courseTimer = 0;
+					}
+				} else {
+					if (ent_anim_count == 3) {
+						courseTimer += Gdx.graphics.getDeltaTime();
+						if (Math.abs(courseTimer) > 0.05) {
+							moves = 'n';
+							courseTimer = 0;
+							ent_anim_count = 0;
+						}
+					}
+				}
+				if (Gdx.input.isKeyJustPressed(Keys.H) && Gdx.input.isKeyJustPressed(Keys.W)) {
 					pos.x = (float) (Math.random()*1280); 
 					pos.y = (float) (Math.random()*800);
 					rect.setPosition(pos.x, pos.y);
+					while (map.doesRectCollideWithMap(this, 0, 0)) {
+						pos.x = (float) (Math.random()*1280); 
+						pos.y = (float) (Math.random()*800);
+						rect.setPosition(pos.x, pos.y);
+					}
 				}
+			}
+			else if(isNpc()) {
+				this.render_unplayed(batch, delta);
 			}
 				
 		}
-		if (ent_img[ent_anim_count] != null)
+		if (!isNpc() && ent_img[ent_anim_count] != null)
 			batch.draw((TextureRegion) ent_img[ent_anim_count].getKeyFrame(stateTime, true), pos.x, pos.y, ENT_WIDTH, ENT_HEIGHT);
 		stateTime += delta;
 		

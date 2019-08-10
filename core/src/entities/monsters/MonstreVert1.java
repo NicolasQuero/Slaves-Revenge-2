@@ -11,4 +11,10 @@ public class MonstreVert1 extends Monster{
 		this.setXpGiven(25);
 	}
 
+	@Override
+	public void movementOutOfCombat(float delta) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

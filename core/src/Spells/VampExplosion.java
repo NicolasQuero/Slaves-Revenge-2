@@ -142,7 +142,7 @@ public class VampExplosion extends Spell {
 				shapeRenderer.end();*/
 				for (Entity ent : ennemies) {
 					float dmgEnt;
-					if (hitbox.overlaps(ent.getCombatHitbox())) {
+					if (hitbox.overlaps(ent.getCombatHitbox()) && ent.isAlive()) {
 						dmgEnt = delta / (SPELL_TIME2 - SPELL_TIME1) * max(this.getPower() * caster.getATK() / ent.getDEF(), this.getPower());
 						ent.addHP(-dmgEnt);
 						dmgDealt += dmgEnt;
