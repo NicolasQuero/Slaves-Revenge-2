@@ -46,17 +46,19 @@ public abstract class Building extends Actor {
 	
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		shapeRenderer.setProjectionMatrix(stage.getCamera().combined);
+		/*shapeRenderer.setProjectionMatrix(stage.getCamera().combined);
+		float x_cam = stage.getCamera().position.x - stage.getCamera().viewportWidth/2;
+		float y_cam = stage.getCamera().position.y - stage.getCamera().viewportHeight/2;
 		shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-		shapeRenderer.line(getX() - stage.getCamera().position.x, getY() - stage.getCamera().position.y,
-				getX() + getWidth() - stage.getCamera().position.x, getY() - stage.getCamera().position.y);
-		shapeRenderer.line(getX() + getWidth() - stage.getCamera().position.x,
-				getY() - stage.getCamera().position.y, getX() + getWidth() - stage.getCamera().position.x, getY() + getHeight());
-		shapeRenderer.line(getX() + getWidth() - stage.getCamera().position.x,
-				getY() + getHeight() - stage.getCamera().position.y, getX() - stage.getCamera().position.x, getY() + getHeight());
-		shapeRenderer.line(getX() - stage.getCamera().position.x, getY() + getHeight(),
-				getX() - stage.getCamera().position.x, getY() - stage.getCamera().position.y);
-		shapeRenderer.end();
+		shapeRenderer.line(getX() - x_cam, getY() - y_cam,
+				getX() + getWidth() - x_cam, getY() - y_cam);
+		shapeRenderer.line(getX() + getWidth() - x_cam,
+				getY() - y_cam, getX() + getWidth() - x_cam, getY() + getHeight() - y_cam);
+		shapeRenderer.line(getX() + getWidth() - x_cam,
+				getY() + getHeight() - y_cam, getX() - x_cam, getY() + getHeight() - y_cam);
+		shapeRenderer.line(getX() - x_cam, getY() + getHeight() - y_cam,
+				getX() - x_cam, getY() - y_cam);
+		shapeRenderer.end();*/
 		if (entered) {
 			
 		}

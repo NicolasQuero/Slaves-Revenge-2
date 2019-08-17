@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.2" tiledversion="1.2.3" name="spritestest" tilewidth="192" tileheight="192" tilecount="388" columns="0">
+<tileset version="1.2" tiledversion="1.2.4" name="spritestest" tilewidth="192" tileheight="192" tilecount="406" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="1">
   <image width="60" height="60" source="eau.png"/>
@@ -1584,5 +1584,79 @@
  </tile>
  <tile id="699">
   <image width="64" height="64" source="decors/metro_floor.png"/>
+ </tile>
+ <tile id="700">
+  <image width="192" height="192" source="houses/chef_bazar/chefbazar00.png"/>
+  <animation>
+   <frame tileid="700" duration="10000"/>
+   <frame tileid="701" duration="125"/>
+   <frame tileid="702" duration="125"/>
+   <frame tileid="703" duration="125"/>
+   <frame tileid="704" duration="125"/>
+   <frame tileid="705" duration="125"/>
+   <frame tileid="706" duration="125"/>
+   <frame tileid="707" duration="125"/>
+   <frame tileid="708" duration="125"/>
+   <frame tileid="709" duration="125"/>
+   <frame tileid="710" duration="125"/>
+   <frame tileid="711" duration="125"/>
+   <frame tileid="712" duration="125"/>
+   <frame tileid="713" duration="125"/>
+   <frame tileid="714" duration="125"/>
+   <frame tileid="715" duration="125"/>
+   <frame tileid="716" duration="125"/>
+   <frame tileid="717" duration="125"/>
+  </animation>
+ </tile>
+ <tile id="701">
+  <image width="192" height="192" source="houses/chef_bazar/chefbazar01.png"/>
+ </tile>
+ <tile id="702">
+  <image width="192" height="192" source="houses/chef_bazar/chefbazar02.png"/>
+ </tile>
+ <tile id="703">
+  <image width="192" height="192" source="houses/chef_bazar/chefbazar03.png"/>
+ </tile>
+ <tile id="704">
+  <image width="192" height="192" source="houses/chef_bazar/chefbazar04.png"/>
+ </tile>
+ <tile id="705">
+  <image width="192" height="192" source="houses/chef_bazar/chefbazar05.png"/>
+ </tile>
+ <tile id="706">
+  <image width="192" height="192" source="houses/chef_bazar/chefbazar06.png"/>
+ </tile>
+ <tile id="707">
+  <image width="192" height="192" source="houses/chef_bazar/chefbazar07.png"/>
+ </tile>
+ <tile id="708">
+  <image width="192" height="192" source="houses/chef_bazar/chefbazar08.png"/>
+ </tile>
+ <tile id="709">
+  <image width="192" height="192" source="houses/chef_bazar/chefbazar09.png"/>
+ </tile>
+ <tile id="710">
+  <image width="192" height="192" source="houses/chef_bazar/chefbazar10.png"/>
+ </tile>
+ <tile id="711">
+  <image width="192" height="192" source="houses/chef_bazar/chefbazar11.png"/>
+ </tile>
+ <tile id="712">
+  <image width="192" height="192" source="houses/chef_bazar/chefbazar12.png"/>
+ </tile>
+ <tile id="713">
+  <image width="192" height="192" source="houses/chef_bazar/chefbazar13.png"/>
+ </tile>
+ <tile id="714">
+  <image width="192" height="192" source="houses/chef_bazar/chefbazar14.png"/>
+ </tile>
+ <tile id="715">
+  <image width="192" height="192" source="houses/chef_bazar/chefbazar15.png"/>
+ </tile>
+ <tile id="716">
+  <image width="192" height="192" source="houses/chef_bazar/chefbazar16.png"/>
+ </tile>
+ <tile id="717">
+  <image width="192" height="192" source="houses/chef_bazar/chefbazar17.png"/>
  </tile>
 </tileset>

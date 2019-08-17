@@ -137,9 +137,7 @@ public abstract class GameMap {
 	
 	
 	public void render (OrthographicCamera camera, SpriteBatch batch, float delta) {
-		GAME_TIME += delta/10;
-		if(GAME_TIME > 24)
-			GAME_TIME = 0f;
+		changeTime(delta);
 		show_ips(delta);
 		if (!in_combat) {
 			if (Gdx.input.isKeyJustPressed(Keys.K)) {
@@ -309,11 +307,11 @@ public abstract class GameMap {
 		float y = ent.getRekt().getY() + amountY;
 		float width = ent.getRekt().getWidth();
 		float height = ent.getRekt().getHeight();
-		Rectangle coll_rect = ent.getRekt();
+		Rectangle coll_rect = new Rectangle(x, y, width, height);
 		coll_rect.setPosition(x, y); // We create a new rectangle at the position where the entity wants to go 
 		
 		if(x<0 || y<100 || x + width > this.getPixelWidth() || y + height > this.getPixelHeight()) { // We check whether it collides with the border or not
-			System.out.println(x + width + " " + y + height);
+			System.out.println(x + " " + width + " " + y + " " + height);
 			return true;
 		}
 
@@ -458,6 +456,13 @@ public abstract class GameMap {
 					return false;
 				}
 		});
+	}
+	
+	public void changeTime(float delta) {
+		GAME_TIME += delta/10;
+		if(GAME_TIME > 24)
+			GAME_TIME = 0f;
+		GAME_TIME = 12f;
 	}
 	
 }
